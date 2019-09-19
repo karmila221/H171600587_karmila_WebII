@@ -12,12 +12,12 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('phone number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
 
-                                @error('email')
+                                @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -38,41 +38,6 @@
                                 @enderror
                             </div>
                         </div>
-                         <div class="row">
-          <div class="col-md-4"></div>
-          <div class="form-group col-md-4">
-             <div class="captcha">
-               <span>{!! captcha_img() !!}</span>
-               <button type="button" class="btn btn-success"><i class="fa fa-refresh" id="refresh"></i></button>
-               </div>
-            </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4"></div>
-            <div class="form-group col-md-4">
-             <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha"></div>
-          </div>
-        <div class="row">
-          <div class="col-md-4"></div>
-          <div class="form-group col-md-4">
-            <button type="submit" class="btn btn-success">Submit</button>
-          </div>
-        </div>
-      </form>
-    </div>
-</body>
-<script type="text/javascript">
-$('#refresh').click(function(){
-  $.ajax({
-     type:'GET',
-     url:'refreshcaptcha',
-     success:function(data){
-        $(".captcha span").html(data.captcha);
-     }
-  });
-});
-</script>
-</html>
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
@@ -85,6 +50,27 @@ $('#refresh').click(function(){
                                 </div>
                             </div>
                         </div>
+
+
+<div class="form-group row{{ $errors->has('captcha') ? ' has-error' : '' }}">
+        <label for="password" class="col-md-4 col-form-label text-md-right">Captcha</label>
+        <div class="col-md-6">
+
+    <div class="captcha">
+    <span>{!! captcha_img() !!}</span>
+    <button type="button" class="btn btn-success btn-refresh">Refresh</button>
+    </div>
+    <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+    @if ($errors->has('captcha'))
+    {{ __('gagal') }}
+        <span class="help-block">
+            <strong>{{ $errors->first('captcha') }}</strong>
+        </span>
+    @endif
+</div>
+</div>
+
+
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
